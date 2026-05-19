@@ -1,0 +1,856 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "FastAPI",
+        "version": "0.1.0"
+    },
+    "paths": {
+        "/": {
+            "get": {
+                "summary": "Read Root",
+                "operationId": "read_root__get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tasks/": {
+            "get": {
+                "summary": "Get All Tasks",
+                "description": "Obtiene todas las tareas.\n\nEsta función obtiene una lista de todas las tareas almacenadas en la base de datos.\nRetorna una lista de objetos de tipo Tarea.",
+                "operationId": "get_all_tasks_tasks__get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/Tarea"
+                                    },
+                                    "type": "array",
+                                    "title": "Response Get All Tasks Tasks  Get"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create Task",
+                "description": "Crea una nueva tarea.\n\nEsta función recibe un objeto Tarea y lo inserta en la base de datos.\nRetorna el objeto Tarea creado.\n\nArgs:\n    task (Tarea): El objeto Tarea a crear.\n\nReturns:\n    Tarea: El objeto Tarea creado.",
+                "operationId": "create_task_tasks__post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Tarea"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Tarea"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tasks/{task_id}": {
+            "get": {
+                "summary": "Get Task",
+                "description": "Obtiene una tarea específica por su ID.\n\nEsta función busca una tarea en la base de datos utilizando el ID proporcionado.\nSi la tarea no se encuentra, lanza una excepción HTTP 404.\n\nArgs:\n    task_id (str): El ID de la tarea a buscar.\n\nReturns:\n    Tarea: El objeto Tarea encontrado.",
+                "operationId": "get_task_tasks__task_id__get",
+                "parameters": [
+                    {
+                        "name": "task_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Task Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Tarea"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update Task",
+                "description": "Actualiza una tarea existente.\n\nEsta función actualiza una tarea en la base de datos utilizando el ID proporcionado.\nSi la tarea no se encuentra, lanza una excepción HTTP 404.\n\nArgs:\n    task_id (str): El ID de la tarea a actualizar.\n    task (Tarea): El objeto Tarea con los nuevos datos.\n\nReturns:\n    Tarea: El objeto Tarea actualizado.",
+                "operationId": "update_task_tasks__task_id__put",
+                "parameters": [
+                    {
+                        "name": "task_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Task Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Tarea"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Tarea"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete Task",
+                "description": "Elimina una tarea existente.\n\nEsta función elimina una tarea de la base de datos utilizando el ID proporcionado.\nSi la tarea no se encuentra, lanza una excepción HTTP 404.\n\nArgs:\n    task_id (str): El ID de la tarea a eliminar.\n\nReturns:\n    dict: Un mensaje de éxito si la tarea fue eliminada.",
+                "operationId": "delete_task_tasks__task_id__delete",
+                "parameters": [
+                    {
+                        "name": "task_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Task Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tasks/habilidad/{habilidad}": {
+            "get": {
+                "summary": "Get Tasks By Habilidad",
+                "description": "Obtiene tareas que requieren una determinada habilidad.\n\nEsta función busca tareas en la base de datos que requieren la habilidad proporcionada.\nRetorna una lista de objetos de tipo Tarea.\n\nArgs:\n    habilidad (str): La habilidad requerida.\n\nReturns:\n    List[Tarea]: Una lista de tareas que requieren la habilidad.",
+                "operationId": "get_tasks_by_habilidad_tasks_habilidad__habilidad__get",
+                "parameters": [
+                    {
+                        "name": "habilidad",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Habilidad"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Tarea"
+                                    },
+                                    "title": "Response Get Tasks By Habilidad Tasks Habilidad  Habilidad  Get"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tasks/colaborador/{email}": {
+            "get": {
+                "summary": "Get Tasks By Colaborador",
+                "description": "Obtiene tareas asignadas a un determinado colaborador.\n\nEsta función busca tareas en la base de datos que tienen asignado al colaborador con el email proporcionado.\nRetorna una lista de objetos de tipo Tarea.\n\nArgs:\n    email (str): El email del colaborador.\n\nReturns:\n    List[Tarea]: Una lista de tareas asignadas al colaborador.",
+                "operationId": "get_tasks_by_colaborador_tasks_colaborador__email__get",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Email"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Tarea"
+                                    },
+                                    "title": "Response Get Tasks By Colaborador Tasks Colaborador  Email  Get"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tasks/{task_id}/assign": {
+            "post": {
+                "summary": "Assign Collaborator",
+                "operationId": "assign_collaborator_tasks__task_id__assign_post",
+                "parameters": [
+                    {
+                        "name": "task_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Task Id"
+                        }
+                    },
+                    {
+                        "name": "collaborator_email",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Collaborator Email"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Tarea"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tasks/{task_id}/candidates": {
+            "get": {
+                "summary": "Get Candidates For Task",
+                "operationId": "get_candidates_for_task_tasks__task_id__candidates_get",
+                "parameters": [
+                    {
+                        "name": "task_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Task Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "title": "Response Get Candidates For Task Tasks  Task Id  Candidates Get"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tasks/completas": {
+            "get": {
+                "summary": "Get Completely Assigned Tasks",
+                "description": "Obtiene tareas completamente asignadas.\n\nEsta función busca tareas en la base de datos que tienen asignados tantos colaboradores como segmentos de los que consta la tarea.\nRetorna una lista de objetos de tipo Tarea.\n\nReturns:\n    List[Tarea]: Una lista de tareas completamente asignadas.",
+                "operationId": "get_completely_assigned_tasks_tasks_completas_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/Tarea"
+                                    },
+                                    "type": "array",
+                                    "title": "Response Get Completely Assigned Tasks Tasks Completas Get"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/collaborators/": {
+            "get": {
+                "summary": "Get All Collaborators",
+                "description": "Obtiene todos los colaboradores.\n\nEsta función obtiene una lista de todos los colaboradores almacenados en la base de datos.\nRetorna una lista de objetos de tipo Colaborador.\n\nReturns:\n    List[Colaborador]: Una lista de colaboradores.",
+                "operationId": "get_all_collaborators_collaborators__get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/Colaborador"
+                                    },
+                                    "type": "array",
+                                    "title": "Response Get All Collaborators Collaborators  Get"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create Collaborator",
+                "description": "Crea un nuevo colaborador.\n\nEsta función recibe un objeto Colaborador y lo inserta en la base de datos.\nSi el colaborador ya existe, lanza una excepción HTTP 400.\n\nArgs:\n    collaborator (Colaborador): El objeto Colaborador a crear.\n\nReturns:\n    Colaborador: El objeto Colaborador creado.",
+                "operationId": "create_collaborator_collaborators__post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Colaborador"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Colaborador"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/collaborators/{email}": {
+            "get": {
+                "summary": "Get Collaborator",
+                "description": "Obtiene un colaborador específico por su email.\n\nEsta función busca un colaborador en la base de datos utilizando el email proporcionado.\nSi el colaborador no se encuentra, lanza una excepción HTTP 404.\n\nArgs:\n    email (str): El email del colaborador a buscar.\n\nReturns:\n    Colaborador: El objeto Colaborador encontrado.",
+                "operationId": "get_collaborator_collaborators__email__get",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Email"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Colaborador"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete Collaborator",
+                "description": "Elimina un colaborador existente.\n\nEsta función elimina un colaborador de la base de datos utilizando el email proporcionado.\nSi el colaborador no se encuentra, lanza una excepción HTTP 404.\n\nArgs:\n    email (str): El email del colaborador a eliminar.\n\nReturns:\n    dict: Un mensaje de éxito si el colaborador fue eliminado.",
+                "operationId": "delete_collaborator_collaborators__email__delete",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Email"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/collaborators/responsable/{responsable_email}": {
+            "get": {
+                "summary": "Get Collaborators By Responsable",
+                "description": "Obtiene los colaboradores de un determinado usuario.\n\nEsta función busca los colaboradores que participan en alguna de las tareas de las que el usuario es responsable.\nRetorna una lista de emails de colaboradores.\n\nArgs:\n    responsable_email (str): El email del usuario responsable.\n\nReturns:\n    List[str]: Una lista de emails de colaboradores.",
+                "operationId": "get_collaborators_by_responsable_collaborators_responsable__responsable_email__get",
+                "parameters": [
+                    {
+                        "name": "responsable_email",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Responsable Email"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "title": "Response Get Collaborators By Responsable Collaborators Responsable  Responsable Email  Get"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/collaborators/{email}/skills": {
+            "get": {
+                "summary": "Get All Skills",
+                "description": "Obtiene todas las habilidades de un colaborador.\n\nEsta función busca un colaborador en la base de datos utilizando el email proporcionado.\nSi el colaborador se encuentra, retorna una lista de sus habilidades.\nSi el colaborador no se encuentra, lanza una excepción HTTP 404.\n\nArgs:\n    email (str): El email del colaborador.\n\nReturns:\n    List[str]: Una lista de habilidades del colaborador.",
+                "operationId": "get_all_skills_collaborators__email__skills_get",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Email"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "title": "Response Get All Skills Collaborators  Email  Skills Get"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Add Skill",
+                "description": "Añade una habilidad a un colaborador.\n\nEsta función busca un colaborador en la base de datos utilizando el email proporcionado.\nSi el colaborador se encuentra, añade la habilidad proporcionada a su lista de habilidades.\nSi la habilidad ya existe, lanza una excepción HTTP 400.\nSi el colaborador no se encuentra, lanza una excepción HTTP 404.\n\nArgs:\n    email (str): El email del colaborador.\n    skill (str): La habilidad a añadir.\n\nReturns:\n    List[str]: La lista actualizada de habilidades del colaborador.",
+                "operationId": "add_skill_collaborators__email__skills_post",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Email"
+                        }
+                    },
+                    {
+                        "name": "skill",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Skill"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "title": "Response Add Skill Collaborators  Email  Skills Post"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/collaborators/{email}/skills/{skill}": {
+            "delete": {
+                "summary": "Delete Skill",
+                "description": "Elimina una habilidad de un colaborador.\n\nEsta función busca un colaborador en la base de datos utilizando el email proporcionado.\nSi el colaborador se encuentra, elimina la habilidad proporcionada de su lista de habilidades.\nSi la habilidad no existe, lanza una excepción HTTP 400.\nSi el colaborador no se encuentra, lanza una excepción HTTP 404.\n\nArgs:\n    email (str): El email del colaborador.\n    skill (str): La habilidad a eliminar.\n\nReturns:\n    List[str]: La lista actualizada de habilidades del colaborador.",
+                "operationId": "delete_skill_collaborators__email__skills__skill__delete",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Email"
+                        }
+                    },
+                    {
+                        "name": "skill",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Skill"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Colaborador": {
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "title": "Email"
+                    },
+                    "nombre": {
+                        "type": "string",
+                        "title": "Nombre"
+                    },
+                    "habilidades": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Habilidades"
+                    },
+                    "segmento_asignado": {
+                        "type": "integer",
+                        "title": "Segmento Asignado"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "email",
+                    "nombre",
+                    "habilidades",
+                    "segmento_asignado"
+                ],
+                "title": "Colaborador"
+            },
+            "HTTPValidationError": {
+                "properties": {
+                    "detail": {
+                        "items": {
+                            "$ref": "#/components/schemas/ValidationError"
+                        },
+                        "type": "array",
+                        "title": "Detail"
+                    }
+                },
+                "type": "object",
+                "title": "HTTPValidationError"
+            },
+            "Tarea": {
+                "properties": {
+                    "responsable": {
+                        "type": "string",
+                        "format": "email",
+                        "title": "Responsable"
+                    },
+                    "descripcion": {
+                        "type": "string",
+                        "maxLength": 50,
+                        "title": "Descripcion"
+                    },
+                    "habilidades": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Habilidades"
+                    },
+                    "segmentos": {
+                        "type": "integer",
+                        "title": "Segmentos"
+                    },
+                    "colaboradores": {
+                        "items": {
+                            "$ref": "#/components/schemas/Colaborador"
+                        },
+                        "type": "array",
+                        "title": "Colaboradores"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "responsable",
+                    "descripcion",
+                    "habilidades",
+                    "segmentos",
+                    "colaboradores"
+                ],
+                "title": "Tarea"
+            },
+            "ValidationError": {
+                "properties": {
+                    "loc": {
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "integer"
+                                }
+                            ]
+                        },
+                        "type": "array",
+                        "title": "Location"
+                    },
+                    "msg": {
+                        "type": "string",
+                        "title": "Message"
+                    },
+                    "type": {
+                        "type": "string",
+                        "title": "Error Type"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "loc",
+                    "msg",
+                    "type"
+                ],
+                "title": "ValidationError"
+            }
+        }
+    }
+}
